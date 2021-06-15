@@ -125,6 +125,10 @@
         existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
     };
 
+     const insertBefore = (newNode, existingNode) => {
+        existingNode.parentNode.insertBefore(newNode, existingNode);
+    };
+
     const onMutation = (el, onChange) => {
         const config = { childList: true, characterData: false, attributes: false, subtree: true };
         const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
@@ -177,7 +181,9 @@
 
         init: async () => {
             const container = await getElementWhenPresent('.p-workspace__primary_view_contents');
-            const header = container.querySelector('.p-ia__view_header');
+            const header = container.querySelector('.p-bookmarks_bar__dnd');
+
+            console.log(header);
 
             theatre = document.createElement('div');
             iframe = document.createElement('iframe');
@@ -204,8 +210,8 @@
             theatre.className = 'vy-theatre';
 
             // Build DOM
-            insertAfter(bwamp, container.querySelector('.p-ia__view_header__spacer'));
-            insertAfter(button, container.querySelector('.p-ia__view_header__spacer'));
+            insertBefore(button, container.querySelector('.p-view_header__actions'));
+            insertBefore(bwamp, container.querySelector('.p-view_header__actions'));
             theatre.appendChild(iframe);
             setTimeout(container.prepend(theatre), 300);
             resizeVertical(theatre);
